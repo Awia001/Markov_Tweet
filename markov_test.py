@@ -1,4 +1,5 @@
 import pickle
+from random import choice
 
 try:
 	markovDictionary = pickle.load(open("MarkovDump", "rb")) 
@@ -7,7 +8,7 @@ except IOError:
 	
 sentence = raw_input("Input a sentence:\n")
 words = sentence.split(" ")
-print(words)
+#print(words)
 
 markovDictionary[""].append(words[0])
 for index, word in enumerate(words):
@@ -18,5 +19,13 @@ for index, word in enumerate(words):
 markovDictionary[words[-1]].append("")
 
 pickle.dump(markovDictionary, open("MarkovDump", "wb"))
-	
-print(markovDictionary.items())
+
+generatedSentence = ""
+selectedWord = choice(markovDictionary[""])
+generatedSentence = generatedSentence + " " + selectedWord
+while selectedWord != "":
+	selectedWord = choice(markovDictionary[selectedWord])
+	generatedSentence = generatedSentence + " " + selectedWord
+
+print(generatedSentence)
+#print(markovDictionary.items())
