@@ -1,5 +1,10 @@
-markovDictionary = {"": []}
+import pickle
 
+try:
+	markovDictionary = pickle.load(open("MarkovDump", "rb")) 
+except IOError:
+	markovDictionary = {"": []}
+	
 sentence = raw_input("Input a sentence:\n")
 words = sentence.split(" ")
 print(words)
@@ -11,6 +16,7 @@ for index, word in enumerate(words):
 	if not markovDictionary.has_key(word):
 		markovDictionary[word] = []
 markovDictionary[words[-1]].append("")
-		
+
+pickle.dump(markovDictionary, open("MarkovDump", "wb"))
 	
 print(markovDictionary.items())
